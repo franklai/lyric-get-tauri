@@ -21,7 +21,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "app.vercel.franks543-lyric-get",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -38,6 +38,7 @@
         "fullscreen": false,
         "resizable": true,
         "title": "lyric-get-tauri",
+        "url": "https://franks543-lyric-get.vercel.app/",
         "width": 800,
         "height": 600
       }
