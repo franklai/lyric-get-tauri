@@ -39,8 +39,8 @@
         "resizable": true,
         "title": "lyric-get-tauri",
         "url": "https://franks543-lyric-get.vercel.app/",
-        "width": 800,
-        "height": 600
+        "width": 1024,
+        "height": 768
       }
     ]
   }
