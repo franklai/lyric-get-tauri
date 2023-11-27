@@ -29,7 +29,8 @@
       "targets": "all",
       "identifier": "app.vercel.franks543-lyric-get",
       "icon": [
-        "icons/icon.png"
+        "icons/icon.png",
+        "icons/icon.ico"
       ]
     },
     "security": {
