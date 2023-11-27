@@ -1,0 +1,201 @@
+/* eslint func-names: 0, no-var: 0, vars-on-top:0, prefer-template: 0, prefer-arrow-callback:0 */
+function init() {
+  if (!document.querySelectorAll) {
+    return;
+  }
+
+  var links = document.querySelectorAll(".pure-menu-link");
+  links = Array.prototype.slice.call(links);
+
+  var $ = function (id) {
+    return document.getElementById(id);
+  };
+  var q = function (selector) {
+    return document.querySelector(selector);
+  };
+
+  var formQuery = $("query_form");
+  var inputUrl = $("url");
+  var btnSubmit = $("submit_btn");
+  var divLoading = $("loading_div");
+  var divLyric = $("lyric_div");
+  var textareaLyric = $("lyric_textarea");
+
+  var showContent = function (id) {
+    var activeCls = "content-active";
+    q("." + activeCls).classList.remove(activeCls);
+    $(id).classList.add(activeCls);
+
+    var selectedCls = "pure-menu-selected";
+    q("." + selectedCls).classList.remove(selectedCls);
+    q(".pure-menu-item[data-content-id=" + id + "]").classList.add(selectedCls);
+  };
+  var updateTextareaHeight = function () {
+    textareaLyric.style.height = "100px";
+    var height = textareaLyric.scrollHeight;
+    textareaLyric.style.height = height + 20 + "px";
+  };
+
+  var setErrorMsg = function (msg) {
+    if (msg === false) {
+      divLoading.style.display = "none";
+      divLyric.style.display = "block";
+      return;
+    }
+
+    divLoading.innerHTML = msg;
+    divLoading.style.display = "block";
+    divLyric.style.display = "none";
+  };
+  var setLoading = function () {
+    setErrorMsg("Loading...");
+    btnSubmit.disabled = true;
+  };
+  var setError = function () {
+    var errMsg =
+      '<span style="color: red;">Failed to get lyric. Please contact franklai.</span>';
+    setErrorMsg(errMsg);
+    btnSubmit.disabled = false;
+  };
+  var setResult = function (lyric) {
+    if (!lyric) {
+      setError();
+      return;
+    }
+
+    setErrorMsg(false);
+    btnSubmit.disabled = false;
+
+    textareaLyric.value = lyric;
+    updateTextareaHeight(lyric);
+  };
+
+  links.forEach(function (link) {
+    link.addEventListener("click", function (evt) {
+      console.log("click on link");
+      evt.preventDefault();
+      evt.stopImmediatePropagation();
+      evt.stopPropagation();
+
+      var pn = evt.target.parentNode;
+      if (!pn || !pn.dataset) {
+        return;
+      }
+
+      var id = pn.dataset.contentId;
+      console.log("show id:", id);
+      showContent(id);
+    });
+  });
+
+  var selectLyric = function () {
+    textareaLyric.select();
+  };
+  $("select").addEventListener("click", function () {
+    selectLyric();
+  });
+  if (
+    document.queryCommandSupported &&
+    document.queryCommandSupported("copy")
+  ) {
+    var msg = q(".copied-msg");
+
+    $("copy").addEventListener("click", function () {
+      selectLyric();
+      document.execCommand("copy");
+
+      msg.classList.add("fadeout");
+    });
+
+    msg.addEventListener("transitionend", function () {
+      msg.classList.remove("fadeout");
+    });
+  } else {
+    $("copy").disabled = true;
+  }
+  inputUrl.addEventListener("click", function () {
+    inputUrl.select();
+  });
+
+  var doAjaxQuery = function (val) {
+    var url = "app?url=" + encodeURIComponent(val);
+
+    fetch(url)
+      .then(function (resp) {
+        resp
+          .json()
+          .then(function (json) {
+            if (!json || !json.lyric) {
+              setError();
+              return;
+            }
+            setResult(json.lyric);
+          })
+          .catch(function () {
+            setError();
+          });
+      })
+      .catch(function () {
+        setError();
+      });
+  };
+  var doElectronQuery = function (val) {
+    try {
+      const { ipcRenderer } = require("electron");
+      ipcRenderer.on("asynchronous-reply", (event, lyric) => {
+        if (!lyric) {
+          setError();
+          return;
+        }
+
+        setResult(lyric);
+      });
+      ipcRenderer.send("asynchronous-message", val);
+    } catch (err) {
+      console.log("Error:", err);
+    }
+  };
+  var doTauriQuery = async function (val) {
+    const { http } = window.__TAURI__;
+    const vercelUrlPrefix =
+      "https://franks543-lyric-get.vercel.app/api/lyric/get/";
+    const url = `${vercelUrlPrefix}${encodeURIComponent(val)}`;
+    const response = await http.fetch(url);
+
+    setResult(response.data.lyric);
+  };
+
+  var doQuery = async function () {
+    var val = inputUrl.value.trim();
+    if (val === "" || val.toLowerCase().match("https?://") === null) {
+      return false;
+    }
+
+    setLoading();
+
+    return await doTauriQuery(val);
+    // return doElectronQuery(val);
+  };
+
+  $("examples").addEventListener("click", async function (evt) {
+    if (evt.target.tagName.toLowerCase() !== "a") {
+      return;
+    }
+    if (evt.metaKey || evt.ctrlKey || evt.shiftKey || evt.altKey) {
+      return;
+    }
+    evt.preventDefault();
+
+    inputUrl.value = evt.target.href;
+
+    showContent("main");
+    await doQuery();
+  });
+
+  formQuery.addEventListener("submit", function (evt) {
+    evt.preventDefault();
+    doQuery();
+  });
+}
+
+document.addEventListener("DOMContentLoaded", init);

@@ -1,46 +1,247 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tauri App</title>
-    <script type="module" src="/main.js" defer></script>
-    <style>
-      .logo.vanilla:hover {
-        filter: drop-shadow(0 0 2em #ffe21c);
-      }
-    </style>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' https://unpkg.com;"
+    />
+    <title>Lyric Get</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+      integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div class="container">
-      <h1>Welcome to Tauri!</h1>
+    <div class="header pure-menu pure-menu-horizontal pure-menu-fixed">
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item pure-menu-selected" data-content-id="main">
+          <a href="#" class="pure-menu-link">Lyric Get</a>
+        </li>
+        <li class="pure-menu-item" data-content-id="examples">
+          <a href="#" class="pure-menu-link">Examples</a>
+        </li>
+      </ul>
+    </div>
 
-      <div class="row">
-        <a href="https://tauri.app" target="_blank">
-          <img src="/assets/tauri.svg" class="logo tauri" alt="Tauri logo" />
-        </a>
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-          target="_blank"
-        >
-          <img
-            src="/assets/javascript.svg"
-            class="logo vanilla"
-            alt="JavaScript logo"
-          />
-        </a>
+    <div class="content">
+      <div id="main" class="content-block content-active fill">
+        <div class="do-center">
+          <form id="query_form" class="width-limit">
+            <fieldset>
+              <input
+                type="text"
+                id="url"
+                class="url fill"
+                placeholder="Paste URL HERE..."
+                title="Paste URL HERE..."
+                value=""
+              />
+              <input
+                type="submit"
+                id="submit_btn"
+                class="submit"
+                value="Fetch"
+              />
+            </fieldset>
+          </form>
+          <div id="loading_div" class="lyric-loading-div width-limit">
+            Loading...
+          </div>
+
+          <div id="lyric_div" class="lyric-div width-limit" lang="ja">
+            <input type="button" id="select" value="Select Lyric" />
+            <input type="button" id="copy" value="Copy Lyric" />
+            <span class="copied-msg">Lyric copied to clipboard.</span>
+            <div class="hr"></div>
+            <textarea
+              lang="ja"
+              id="lyric_textarea"
+              class="lyric-textarea"
+            ></textarea>
+          </div>
+        </div>
       </div>
 
-      <p>Click on the Tauri logo to learn more about the framework</p>
+      <div id="examples" class="content-block">
+        <dl>
+          <dt>うたまっぷ</dt>
+          <dd>
+            <a href="https://www.utamap.com/showkasi.php?surl=70380"
+              >https://www.utamap.com/showkasi.php?surl=70380</a
+            >
+          </dd>
+          <dt>Uta-Net</dt>
+          <dd>
+            <a href="https://www.uta-net.com/song/17248/"
+              >https://www.uta-net.com/song/17248/</a
+            >
+          </dd>
+          <dt>歌詞ナビ</dt>
+          <dd>
+            <a href="https://kashinavi.com/song_view.html?65545"
+              >https://kashinavi.com/song_view.html?65545</a
+            >
+          </dd>
+          <dt>イベスタ歌詞とる</dt>
+          <dd>
+            <a href="https://lyric.evesta.jp/l7d00bds.html"
+              >https://lyric.evesta.jp/l7d00bds.html</a
+            >
+          </dd>
+          <dt>UtaTen</dt>
+          <dd>
+            <a href="https://utaten.com/lyric/jb81012024/"
+              >https://utaten.com/lyric/jb81012024/</a
+            >
+          </dd>
+          <dt>JOYSOUND.com</dt>
+          <dd>
+            <a href="https://www.joysound.com/web/search/song/26613"
+              >https://www.joysound.com/web/search/song/26613</a
+            >
+          </dd>
+          <dt>music.jp</dt>
+          <dd>
+            <a
+              href="https://music-book.jp/music/Kashi/aaa5vfyg?artistname=FLOW&title=COLORS"
+              >https://music-book.jp/music/Kashi/aaa5vfyg?...</a
+            >
+          </dd>
+          <dt>petitlyrics</dt>
+          <dd>
+            <a href="https://petitlyrics.com/lyrics/2669211"
+              >https://petitlyrics.com/lyrics/2669211</a
+            >
+          </dd>
+          <dt>J-Lyric.net</dt>
+          <dd>
+            <a href="https://j-lyric.net/artist/a002723/l001e83.html"
+              >https://j-lyric.net/artist/a002723/l001e83.html</a
+            >
+          </dd>
+          <dt>J-Total Music</dt>
+          <dd>
+            <a href="https://music.j-total.net/data/026ha/053_Perfume/038.html"
+              >https://music.j-total.net/data/026ha/053_Perfume/038.html</a
+            >
+          </dd>
+          <dt>Hoick</dt>
+          <dd>
+            <a href="https://hoick.jp/mdb/detail/9920/%E3%81%AB%E3%81%98"
+              >https://hoick.jp/mdb/detail/9920/%E3%81%AB%E3%81%98</a
+            >
+          </dd>
 
-      <form class="row" id="greet-form">
-        <input id="greet-input" placeholder="Enter a name..." />
-        <button type="submit">Greet</button>
-      </form>
+          <dt>musixmatch</dt>
+          <dd>
+            <a
+              href="https://www.musixmatch.com/lyrics/Mariah-Carey/We-Belong-Together"
+              >https://www.musixmatch.com/lyrics/Mariah-Carey/We-Belong-Together</a
+            >
+          </dd>
 
-      <p id="greet-msg"></p>
+          <dt>kkbox</dt>
+          <dd>
+            <a
+              href="https://www.kkbox.com/jp/ja/song/gly00H52O5lQXuYvQXuYv0XL-index.html"
+              >https://www.kkbox.com/jp/ja/song/gly00H52O5lQXuYvQXuYv0XL-index.html</a
+            >
+          </dd>
+
+          <dt>LINE MUSIC</dt>
+          <dd>
+            <a href="https://music.line.me/webapp/track/mt000000000bcd3d8a"
+              >https://music.line.me/webapp/track/mt000000000bcd3d8a</a
+            >
+          </dd>
+
+          <dt>oricon</dt>
+          <dd>
+            <a href="https://www.oricon.co.jp/prof/560188/lyrics/I232023/"
+              >https://www.oricon.co.jp/prof/560188/lyrics/I232023/</a
+            >
+          </dd>
+
+          <dt>Lyrical Nonsense</dt>
+          <dd>
+            <a
+              href="https://www.lyrical-nonsense.com/global/lyrics/eir-aoi/ignite/#Romaji"
+              >https://www.lyrical-nonsense.com/global/lyrics/eir-aoi/ignite/#Romaji</a
+            >
+          </dd>
+
+          <dt>Mojim.com</dt>
+          <dd>
+            <a href="https://mojim.com/twy105842x16x11.htm"
+              >https://mojim.com/twy105842x16x11.htm</a
+            >
+          </dd>
+
+          <dt>Rock Lyric</dt>
+          <dd>
+            <a href="https://rocklyric.jp/lyric.php?sid=16016"
+              >https://rocklyric.jp/lyric.php?sid=16016</a
+            >
+          </dd>
+
+          <dt>nana</dt>
+          <dd>
+            <a href="https://nana-music.com/songs/36697"
+              >https://nana-music.com/songs/36697</a
+            >
+          </dd>
+
+          <dt>TuneCore Japan</dt>
+          <dd>
+            <a href="https://linkco.re/zcFutsCs/songs/1596102/lyrics"
+              >https://linkco.re/zcFutsCs/songs/1596102/lyrics</a
+            >
+          </dd>
+
+          <dt>animesongz</dt>
+          <dd>
+            <a href="https://animesongz.com/lyric/5145/23706"
+              >https://animesongz.com/lyric/5145/23706</a
+            >
+          </dd>
+
+          <dt>genius</dt>
+          <dd>
+            <a href="https://genius.com/Coldplay-adventure-of-a-lifetime-lyrics"
+              >https://genius.com/Coldplay-adventure-of-a-lifetime-lyrics</a
+            >
+          </dd>
+
+          <dt>azlyrics</dt>
+          <dd>
+            <a
+              href="https://www.azlyrics.com/lyrics/coldplay/adventureofalifetime.html"
+              >https://www.azlyrics.com/lyrics/coldplay/adventureofalifetime.html</a
+            >
+          </dd>
+        </dl>
+      </div>
+
+      <div class="footer">
+        <div class="line-item">If you have problems to get lyric.</div>
+        <div class="line-item">
+          Please report issue on
+          <a
+            href="https://github.com/franklai/lyric-get-tauri/issues"
+            target="_blank"
+            >lyric-get-tauri Issues</a
+          >
+        </div>
+      </div>
     </div>
+
+    <script type="module" src="script.js"></script>
   </body>
 </html>
