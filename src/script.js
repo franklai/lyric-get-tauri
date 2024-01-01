@@ -1,4 +1,6 @@
 /* eslint func-names: 0, no-var: 0, vars-on-top:0, prefer-template: 0, prefer-arrow-callback:0 */
+import lyricParser from "./lyric-parser/index.js";
+
 function init() {
   if (!document.querySelectorAll) {
     return;
@@ -36,25 +38,40 @@ function init() {
     textareaLyric.style.height = height + 20 + "px";
   };
 
-  var setErrorMsg = function (msg) {
-    if (msg === false) {
-      divLoading.style.display = "none";
-      divLyric.style.display = "block";
-      return;
-    }
+  const showLyric = () => {
+    divLoading.style.display = "none";
+    divLyric.style.display = "block";
+  };
 
-    divLoading.innerHTML = msg;
+  const showMessage = ({ message, isError = false }) => {
+    divLoading.innerHTML = message;
+
     divLoading.style.display = "block";
     divLyric.style.display = "none";
+
+    divLoading.classList.toggle("error", isError);
   };
+
+  const showLoading = () => {
+    showMessage({
+      message: "Loading...",
+    });
+  };
+
+  const showErrorMessage = (message) => {
+    showMessage({
+      message,
+      isError: true,
+    });
+  };
+
   var setLoading = function () {
-    setErrorMsg("Loading...");
+    showLoading();
     btnSubmit.disabled = true;
   };
   var setError = function () {
-    var errMsg =
-      '<span style="color: red;">Failed to get lyric. Please contact franklai.</span>';
-    setErrorMsg(errMsg);
+    var errMsg = "Failed to get lyric. Please contact franklai.";
+    showErrorMessage(errMsg);
     btnSubmit.disabled = false;
   };
   var setResult = function (lyric) {
@@ -63,7 +80,7 @@ function init() {
       return;
     }
 
-    setErrorMsg(false);
+    showLyric();
     btnSubmit.disabled = false;
 
     textareaLyric.value = lyric;
@@ -139,30 +156,19 @@ function init() {
         setError();
       });
   };
-  var doElectronQuery = function (val) {
-    try {
-      const { ipcRenderer } = require("electron");
-      ipcRenderer.on("asynchronous-reply", (event, lyric) => {
-        if (!lyric) {
-          setError();
-          return;
-        }
 
-        setResult(lyric);
-      });
-      ipcRenderer.send("asynchronous-message", val);
-    } catch (err) {
-      console.log("Error:", err);
-    }
-  };
-  var doTauriQuery = async function (val) {
+  const getHtml = async (url) => {
     const { http } = window.__TAURI__;
-    const vercelUrlPrefix =
-      "https://franks543-lyric-get.vercel.app/api/lyric/get/";
-    const url = `${vercelUrlPrefix}${encodeURIComponent(val)}`;
-    const response = await http.fetch(url);
+    const response = await http.fetch(url, {
+      responseType: http.ResponseType.Text,
+    });
+    return response.data;
+  };
 
-    setResult(response.data.lyric);
+  const doLocalQuery = async (val) => {
+    const lyric = await lyricParser.getFull(val, { getHtml });
+
+    setResult(lyric);
   };
 
   var doQuery = async function () {
@@ -173,8 +179,12 @@ function init() {
 
     setLoading();
 
-    return await doTauriQuery(val);
-    // return doElectronQuery(val);
+    try {
+      return await doLocalQuery(val);
+    } catch (err) {
+      console.error(err);
+      setError();
+    }
   };
 
   $("examples").addEventListener("click", async function (evt) {
