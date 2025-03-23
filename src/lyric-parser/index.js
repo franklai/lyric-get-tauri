@@ -2,7 +2,6 @@ import BlockedError from './include/blocked-error.js';
 
 import genius from './genius.js';
 import kkbox from './kkbox.js';
-import mojim from './mojim.js';
 import musixmatch from './musixmatch.js';
 import uta_net from './uta-net.js';
 import utamap from './utamap.js';
@@ -12,7 +11,6 @@ const site_array = [
   genius,
   kkbox,
   // lyrical_nonsense,
-  mojim,
   musixmatch,
   utamap,
   uta_net,
