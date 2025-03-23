@@ -2,54 +2,35 @@
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
-    "devPath": "../src",
-    "distDir": "../src",
-    "withGlobalTauri": true
+    "frontendDist": "../src"
   },
-  "package": {
-    "productName": "lyric-get-tauri",
-    "version": "0.9.3"
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon.png",
+      "icons/icon.ico"
+    ]
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "http": {
-        "request": true,
-        "scope": [
-          "https://franks543-lyric-get.vercel.app/*",
-
-          "https://genius.com/*",
-          "https://www.kkbox.com/*",
-          "https://www.musixmatch.com/lyrics/*",
-          "https://www.utamap.com/*",
-          "https://www.uta-net.com/*"
-        ]
-      }
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "app.vercel.franks543-lyric-get",
-      "icon": [
-        "icons/icon.png",
-        "icons/icon.ico"
-      ]
-    },
-    "security": {
-      "csp": null
-    },
+  "productName": "lyric-get-tauri",
+  "mainBinaryName": "lyric-get-tauri",
+  "version": "0.9.3",
+  "identifier": "app.vercel.franks543-lyric-get",
+  "plugins": {},
+  "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "fullscreen": false,
         "resizable": true,
         "title": "lyric-get-tauri",
         "width": 1024,
-        "height": 768
+        "height": 768,
+        "useHttpsScheme": true
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   }
 }
