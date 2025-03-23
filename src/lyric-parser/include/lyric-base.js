@@ -89,11 +89,19 @@ class LyricBase {
     return value;
   }
 
+  decode(value) {
+    return value
+      .replaceAll('&amp;', '&')
+      .replaceAll('&lt', '<')
+      .replaceAll('&gt;', '>')
+      .replaceAll('&quot;', '"')
+      .replaceAll('&#x27;', "'");
+  }
   stripTags(value) {
     return value.replaceAll(/<[^>]+>/g, '');
   }
   sanitize_html(value) {
-    return this.stripTags(value).trim();
+    return this.stripTags(this.decode(value)).trim();
     // return striptags(decode(value)).trim();
   }
 
