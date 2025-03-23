@@ -89,8 +89,8 @@ a:visited {
   padding: 3px;
 }
 
-.content input[type="button"],
-.content input[type="submit"] {
+.content input[type='button'],
+.content input[type='submit'] {
   background-color: #d0e5f5;
   padding: 3px 10px;
   border: 1px solid #79b7e7;
@@ -98,8 +98,8 @@ a:visited {
   font-size: 16px;
 }
 
-.content input[type="button"]:disabled,
-.content input[type="submit"]:disabled {
+.content input[type='button']:disabled,
+.content input[type='submit']:disabled {
   color: graytext;
 }
 

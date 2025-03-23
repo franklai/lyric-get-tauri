@@ -1,17 +1,17 @@
-import LyricBase from "./include/lyric-base.js";
-import BlockedError from "./include/blocked-error.js";
+import LyricBase from './include/lyric-base.js';
+import BlockedError from './include/blocked-error.js';
 
-const keyword = "musixmatch";
+const keyword = 'musixmatch';
 
 class Lyric extends LyricBase {
   find_lyric(url, json) {
     try {
       const { body } = json.page.lyrics.lyrics;
       let lyric = body;
-      lyric = lyric.replaceAll("′", "'");
+      lyric = lyric.replaceAll('′', "'");
       this.lyric = lyric;
     } catch {
-      console.error("json does not have lyrics body");
+      console.error('json does not have lyrics body');
       return false;
     }
 
@@ -31,17 +31,17 @@ class Lyric extends LyricBase {
   }
 
   is_blocked(html) {
-    return html.indexOf("We detected that your IP is blocked");
+    return html.indexOf('We detected that your IP is blocked');
   }
 
   find_json(html) {
-    const prefix = "var __mxmState = ";
-    const suffix = ";</script>";
+    const prefix = 'var __mxmState = ';
+    const suffix = ';</script>';
 
     const raw = this.find_string_by_prefix_suffix(html, prefix, suffix, false);
     if (!raw) {
       if (this.is_blocked(html)) {
-        throw new BlockedError("musixmatch is blocked");
+        throw new BlockedError('musixmatch is blocked');
       }
       console.error(`Failed to get json content`);
       console.error(html);

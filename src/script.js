@@ -1,12 +1,12 @@
 /* eslint func-names: 0, no-var: 0, vars-on-top:0, prefer-template: 0, prefer-arrow-callback:0 */
-import lyricParser from "./lyric-parser/index.js";
+import lyricParser from './lyric-parser/index.js';
 
 function init() {
   if (!document.querySelectorAll) {
     return;
   }
 
-  var links = document.querySelectorAll(".pure-menu-link");
+  var links = document.querySelectorAll('.pure-menu-link');
   links = Array.prototype.slice.call(links);
 
   var $ = function (id) {
@@ -16,45 +16,45 @@ function init() {
     return document.querySelector(selector);
   };
 
-  var formQuery = $("query_form");
-  var inputUrl = $("url");
-  var btnSubmit = $("submit_btn");
-  var divLoading = $("loading_div");
-  var divLyric = $("lyric_div");
-  var textareaLyric = $("lyric_textarea");
+  var formQuery = $('query_form');
+  var inputUrl = $('url');
+  var btnSubmit = $('submit_btn');
+  var divLoading = $('loading_div');
+  var divLyric = $('lyric_div');
+  var textareaLyric = $('lyric_textarea');
 
   var showContent = function (id) {
-    var activeCls = "content-active";
-    q("." + activeCls).classList.remove(activeCls);
+    var activeCls = 'content-active';
+    q('.' + activeCls).classList.remove(activeCls);
     $(id).classList.add(activeCls);
 
-    var selectedCls = "pure-menu-selected";
-    q("." + selectedCls).classList.remove(selectedCls);
-    q(".pure-menu-item[data-content-id=" + id + "]").classList.add(selectedCls);
+    var selectedCls = 'pure-menu-selected';
+    q('.' + selectedCls).classList.remove(selectedCls);
+    q('.pure-menu-item[data-content-id=' + id + ']').classList.add(selectedCls);
   };
   var updateTextareaHeight = function () {
-    textareaLyric.style.height = "100px";
+    textareaLyric.style.height = '100px';
     var height = textareaLyric.scrollHeight;
-    textareaLyric.style.height = height + 20 + "px";
+    textareaLyric.style.height = height + 20 + 'px';
   };
 
   const showLyric = () => {
-    divLoading.style.display = "none";
-    divLyric.style.display = "block";
+    divLoading.style.display = 'none';
+    divLyric.style.display = 'block';
   };
 
   const showMessage = ({ message, isError = false }) => {
     divLoading.innerHTML = message;
 
-    divLoading.style.display = "block";
-    divLyric.style.display = "none";
+    divLoading.style.display = 'block';
+    divLyric.style.display = 'none';
 
-    divLoading.classList.toggle("error", isError);
+    divLoading.classList.toggle('error', isError);
   };
 
   const showLoading = () => {
     showMessage({
-      message: "Loading...",
+      message: 'Loading...',
     });
   };
 
@@ -70,7 +70,7 @@ function init() {
     btnSubmit.disabled = true;
   };
   var setError = function () {
-    var errMsg = "Failed to get lyric. Please contact franklai.";
+    var errMsg = 'Failed to get lyric. Please contact franklai.';
     showErrorMessage(errMsg);
     btnSubmit.disabled = false;
   };
@@ -88,8 +88,8 @@ function init() {
   };
 
   links.forEach(function (link) {
-    link.addEventListener("click", function (evt) {
-      console.log("click on link");
+    link.addEventListener('click', function (evt) {
+      console.log('click on link');
       evt.preventDefault();
       evt.stopImmediatePropagation();
       evt.stopPropagation();
@@ -100,7 +100,7 @@ function init() {
       }
 
       var id = pn.dataset.contentId;
-      console.log("show id:", id);
+      console.log('show id:', id);
       showContent(id);
     });
   });
@@ -108,34 +108,34 @@ function init() {
   var selectLyric = function () {
     textareaLyric.select();
   };
-  $("select").addEventListener("click", function () {
+  $('select').addEventListener('click', function () {
     selectLyric();
   });
   if (
     document.queryCommandSupported &&
-    document.queryCommandSupported("copy")
+    document.queryCommandSupported('copy')
   ) {
-    var msg = q(".copied-msg");
+    var msg = q('.copied-msg');
 
-    $("copy").addEventListener("click", function () {
+    $('copy').addEventListener('click', function () {
       selectLyric();
-      document.execCommand("copy");
+      document.execCommand('copy');
 
-      msg.classList.add("fadeout");
+      msg.classList.add('fadeout');
     });
 
-    msg.addEventListener("transitionend", function () {
-      msg.classList.remove("fadeout");
+    msg.addEventListener('transitionend', function () {
+      msg.classList.remove('fadeout');
     });
   } else {
-    $("copy").disabled = true;
+    $('copy').disabled = true;
   }
-  inputUrl.addEventListener("click", function () {
+  inputUrl.addEventListener('click', function () {
     inputUrl.select();
   });
 
   var doAjaxQuery = function (val) {
-    var url = "app?url=" + encodeURIComponent(val);
+    var url = 'app?url=' + encodeURIComponent(val);
 
     fetch(url)
       .then(function (resp) {
@@ -173,7 +173,7 @@ function init() {
 
   var doQuery = async function () {
     var val = inputUrl.value.trim();
-    if (val === "" || val.toLowerCase().match("https?://") === null) {
+    if (val === '' || val.toLowerCase().match('https?://') === null) {
       return false;
     }
 
@@ -187,8 +187,8 @@ function init() {
     }
   };
 
-  $("examples").addEventListener("click", async function (evt) {
-    if (evt.target.tagName.toLowerCase() !== "a") {
+  $('examples').addEventListener('click', async function (evt) {
+    if (evt.target.tagName.toLowerCase() !== 'a') {
       return;
     }
     if (evt.metaKey || evt.ctrlKey || evt.shiftKey || evt.altKey) {
@@ -198,14 +198,14 @@ function init() {
 
     inputUrl.value = evt.target.href;
 
-    showContent("main");
+    showContent('main');
     await doQuery();
   });
 
-  formQuery.addEventListener("submit", function (evt) {
+  formQuery.addEventListener('submit', function (evt) {
     evt.preventDefault();
     doQuery();
   });
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener('DOMContentLoaded', init);

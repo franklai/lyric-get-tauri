@@ -1,7 +1,7 @@
 /* global expect test */
 
-import site from "./musixmatch.js";
-import BlockedError from "./include/blocked-error.js";
+import site from './musixmatch.js';
+import BlockedError from './include/blocked-error.js';
 
 const getHtml = async (url) => {
   const response = await fetch(url);
@@ -15,7 +15,7 @@ async function testLyric(object) {
     await inst.get();
   } catch (error) {
     if (error instanceof BlockedError) {
-      console.warn("Blocked by vendor");
+      console.warn('Blocked by vendor');
       return;
     }
   }
@@ -28,20 +28,20 @@ async function testLyric(object) {
   if (length > 0) expect(inst.lyric.length).toBe(length);
 }
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://www.musixmatch.com/lyrics/SawanoHiroyuki-nZk-Tielle-Gemie/sh0ut",
-    title: "sh0ut",
-    artist: "SawanoHiroyuki[nZk]:Tielle&Gemie",
+    url: 'https://www.musixmatch.com/lyrics/SawanoHiroyuki-nZk-Tielle-Gemie/sh0ut',
+    title: 'sh0ut',
+    artist: 'SawanoHiroyuki[nZk]:Tielle&Gemie',
     length: 1957,
   });
 });
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://www.musixmatch.com/lyrics/Maroon-5/Sugar",
-    title: "Sugar",
-    artist: "Maroon 5",
+    url: 'https://www.musixmatch.com/lyrics/Maroon-5/Sugar',
+    title: 'Sugar',
+    artist: 'Maroon 5',
     length: 2511,
   });
 });

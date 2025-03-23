@@ -1,5 +1,5 @@
 /* global expect test */
-import site from "./utamap.js";
+import site from './utamap.js';
 
 const getHtml = async (url) => {
   const response = await fetch(url);
@@ -19,23 +19,23 @@ async function testLyric(object) {
   if (length > 0) expect(inst.lyric.length).toBe(length);
 }
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://www.utamap.com/showkasi.php?surl=59709",
-    title: "One more time,One more chance",
-    artist: "山崎まさよし",
-    lyricist: "山崎将義",
+    url: 'https://www.utamap.com/showkasi.php?surl=59709',
+    title: 'One more time,One more chance',
+    artist: '山崎まさよし',
+    lyricist: '山崎将義',
     length: 794,
   });
 });
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://www.utamap.com/showkasi.php?surl=k-131226-001",
-    title: "ちっぽけな愛のうた",
-    artist: "小枝理子&小笠原秋",
-    lyricist: "亀田誠治",
-    composer: "亀田誠治",
+    url: 'https://www.utamap.com/showkasi.php?surl=k-131226-001',
+    title: 'ちっぽけな愛のうた',
+    artist: '小枝理子&小笠原秋',
+    lyricist: '亀田誠治',
+    composer: '亀田誠治',
     length: 572,
   });
 });

@@ -1,6 +1,6 @@
 /* global expect test */
-import site from "./genius.js";
-import BlockedError from "./include/blocked-error.js";
+import site from './genius.js';
+import BlockedError from './include/blocked-error.js';
 
 const getHtml = async (url) => {
   const response = await fetch(url);
@@ -15,7 +15,7 @@ async function testLyric(object) {
     await inst.get();
   } catch (error) {
     if (error instanceof BlockedError) {
-      console.warn("Blocked by vendor");
+      console.warn('Blocked by vendor');
       return;
     }
   }
@@ -27,11 +27,11 @@ async function testLyric(object) {
   if (length > 0) expect(inst.lyric.length).toBe(length);
 }
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://genius.com/Hollow-coves-coastline-lyrics",
-    title: "Coastline",
-    artist: "Hollow Coves",
+    url: 'https://genius.com/Hollow-coves-coastline-lyrics',
+    title: 'Coastline',
+    artist: 'Hollow Coves',
     length: 1028,
   });
 });

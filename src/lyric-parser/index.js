@@ -1,11 +1,11 @@
-import BlockedError from "./include/blocked-error.js";
+import BlockedError from './include/blocked-error.js';
 
-import genius from "./genius.js";
-import kkbox from "./kkbox.js";
-import mojim from "./mojim.js";
-import musixmatch from "./musixmatch.js";
-import uta_net from "./uta-net.js";
-import utamap from "./utamap.js";
+import genius from './genius.js';
+import kkbox from './kkbox.js';
+import mojim from './mojim.js';
+import musixmatch from './musixmatch.js';
+import uta_net from './uta-net.js';
+import utamap from './utamap.js';
 
 // let site_dict = {};
 const site_array = [
@@ -39,14 +39,14 @@ const get_object = async (url, { getHtml }) => {
   });
 
   if (!site) {
-    const found = url.substring(0, url.indexOf("/", "https://".length)) || url;
+    const found = url.substring(0, url.indexOf('/', 'https://'.length)) || url;
     throw new SiteNotSupportError(found);
   }
 
   const object = new site.Lyric(url, { getHtml });
 
   if (!(await object.parse_page())) {
-    throw new Error("Parse failed.");
+    throw new Error('Parse failed.');
   }
 
   return object;

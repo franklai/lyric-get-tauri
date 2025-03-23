@@ -1,6 +1,6 @@
-import LyricBase from "./include/lyric-base.js";
+import LyricBase from './include/lyric-base.js';
 
-const keyword = "uta-net";
+const keyword = 'uta-net';
 
 class Lyric extends LyricBase {
   find_song_id(url) {
@@ -12,26 +12,26 @@ class Lyric extends LyricBase {
     const song_id = this.find_song_id(url);
 
     if (!song_id) {
-      console.warn("Failed to get song id of url:", url);
+      console.warn('Failed to get song id of url:', url);
       return false;
     }
 
     const song_url = `https://www.uta-net.com/user/phplib/svg/showkasi.php?ID=${song_id}`;
     const raw = await this.getHtml(song_url);
     if (!raw) {
-      console.warn("Failed to get content of url:", song_url);
+      console.warn('Failed to get content of url:', song_url);
       return false;
     }
 
-    const prefix = "<svg ";
-    const suffix = "</svg>";
+    const prefix = '<svg ';
+    const suffix = '</svg>';
     let lyric = this.find_string_by_prefix_suffix(raw, prefix, suffix, true);
     if (!lyric) {
-      console.warn("Failed to find lyric");
+      console.warn('Failed to find lyric');
       return false;
     }
 
-    lyric = lyric.replaceAll("</text>", "\n");
+    lyric = lyric.replaceAll('</text>', '\n');
     lyric = this.sanitize_html(lyric);
 
     this.lyric = lyric;
@@ -42,7 +42,7 @@ class Lyric extends LyricBase {
     const html = await this.getHtml(url);
 
     const patterns = {
-      title: "<h2[^>]*>([^<]+)</h2>",
+      title: '<h2[^>]*>([^<]+)</h2>',
       artist: '<a href="/artist/[0-9]+/".*?itemprop="byArtist".*?>(.+?)</a>',
       lyricist: '作詞：<a.*?itemprop="lyricist".*?>(.+?)</a>',
       composer: '作曲：<a.*?itemprop="composer".*?>(.+?)</a>',

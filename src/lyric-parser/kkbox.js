@@ -1,12 +1,12 @@
-import LyricBase from "./include/lyric-base.js";
-import BlockedError from "./include/blocked-error.js";
+import LyricBase from './include/lyric-base.js';
+import BlockedError from './include/blocked-error.js';
 
-const keyword = "kkbox";
+const keyword = 'kkbox';
 
 class Lyric extends LyricBase {
   get_json_ld(html) {
     const prefix = '<script type="application/ld+json">';
-    const suffix = "</script>";
+    const suffix = '</script>';
 
     const pos = html.indexOf(prefix);
     if (pos === -1) {
@@ -55,9 +55,9 @@ class Lyric extends LyricBase {
       await this.find_info(url, html);
     } catch (error) {
       if (error.status === 403) {
-        throw new BlockedError("KKbox shows 403");
+        throw new BlockedError('KKbox shows 403');
       }
-      if (error.code === "ECONNRESET") {
+      if (error.code === 'ECONNRESET') {
         throw error;
       }
     }

@@ -1,10 +1,10 @@
 const ATTR_LIST = [
-  ["artist", "歌手"],
-  ["lyricist", "作詞"],
-  ["composer", "作曲"],
-  ["arranger", "編曲"],
+  ['artist', '歌手'],
+  ['lyricist', '作詞'],
+  ['composer', '作曲'],
+  ['arranger', '編曲'],
 ];
-const USER_AGENT = "Mozilla/5.0 Gecko/20100101 Firefox/94.0 Lyric Get/2.0";
+const USER_AGENT = 'Mozilla/5.0 Gecko/20100101 Firefox/94.0 Lyric Get/2.0';
 
 class LyricBase {
   constructor(url, { getHtml }) {
@@ -36,7 +36,7 @@ class LyricBase {
     const template = [];
 
     if (this.title) {
-      template.push(this.title, "");
+      template.push(this.title, '');
     }
 
     for (const attribute of ATTR_LIST) {
@@ -49,16 +49,16 @@ class LyricBase {
     }
 
     if (template.length > 2) {
-      template.push("", "");
+      template.push('', '');
     }
     template.push(this.lyric);
 
-    return template.join("\n");
+    return template.join('\n');
   }
 
   async parse_page() {
-    this.title = "base class";
-    throw new Error("Implement this function!");
+    this.title = 'base class';
+    throw new Error('Implement this function!');
   }
 
   find_string_by_prefix_suffix(input, prefix, suffix, including = true) {
@@ -90,7 +90,7 @@ class LyricBase {
   }
 
   stripTags(value) {
-    return value.replaceAll(/<[^>]+>/g, "");
+    return value.replaceAll(/<[^>]+>/g, '');
   }
   sanitize_html(value) {
     return this.stripTags(value).trim();

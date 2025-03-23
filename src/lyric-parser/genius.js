@@ -1,25 +1,25 @@
-import LyricBase from "./include/lyric-base.js";
-import BlockedError from "./include/blocked-error.js";
+import LyricBase from './include/lyric-base.js';
+import BlockedError from './include/blocked-error.js';
 
-const keyword = "genius";
+const keyword = 'genius';
 
 class Lyric extends LyricBase {
   get_by_div_lyrics(html) {
     const prefix = '<div class="lyrics">';
-    const suffix = "</div>";
+    const suffix = '</div>';
 
     return this.find_string_by_prefix_suffix(html, prefix, suffix);
   }
 
   get_by_lyrics_root(html) {
-    const prefix = " Lyrics__Root";
+    const prefix = ' Lyrics__Root';
     const suffix = '<div class="SectionLeaderboard';
 
     let body = this.find_string_by_prefix_suffix(html, prefix, suffix);
     if (body) {
       // remove prefix and suffix
-      body = body.replaceAll(new RegExp(`${prefix}.*?>`, "g"), "");
-      body = body.replaceAll(new RegExp(suffix, "g"), "");
+      body = body.replaceAll(new RegExp(`${prefix}.*?>`, 'g'), '');
+      body = body.replaceAll(new RegExp(suffix, 'g'), '');
 
       // add newline for ad block
       body = body.replaceAll(
@@ -42,17 +42,17 @@ class Lyric extends LyricBase {
       /<div class="PrimisPlayer/,
       '<br/><div class="PrimisPlayer'
     );
-    lyric = lyric.replaceAll("<br/>", "\n");
-    lyric = lyric.replaceAll(/<button.*?<\/button>/g, "");
-    lyric = lyric.replaceAll(/<label.*?<\/label>/g, "");
-    lyric = lyric.replaceAll(/<div class="EmbedForm__Copy.*?<\/div>/g, "");
-    lyric = lyric.replaceAll(/<div class="ShareButtons.*?<\/div>/g, "");
+    lyric = lyric.replaceAll('<br/>', '\n');
+    lyric = lyric.replaceAll(/<button.*?<\/button>/g, '');
+    lyric = lyric.replaceAll(/<label.*?<\/label>/g, '');
+    lyric = lyric.replaceAll(/<div class="EmbedForm__Copy.*?<\/div>/g, '');
+    lyric = lyric.replaceAll(/<div class="ShareButtons.*?<\/div>/g, '');
     lyric = lyric.replaceAll(
       /<div class="LyricsEditExplainer__.*?<\/div>/g,
-      ""
+      ''
     );
-    lyric = lyric.replaceAll(/<div class="RecommendedSongs__.*?<\/div>/g, "");
-    lyric = lyric.replaceAll(/<h2.*?<\/h2>/g, "");
+    lyric = lyric.replaceAll(/<div class="RecommendedSongs__.*?<\/div>/g, '');
+    lyric = lyric.replaceAll(/<h2.*?<\/h2>/g, '');
     lyric = this.sanitize_html(lyric);
 
     this.lyric = lyric;
@@ -78,7 +78,7 @@ class Lyric extends LyricBase {
       html = await this.getHtml(url);
     } catch (error) {
       if (error.status === 403) {
-        throw new BlockedError("genius is blocked");
+        throw new BlockedError('genius is blocked');
       }
     }
 

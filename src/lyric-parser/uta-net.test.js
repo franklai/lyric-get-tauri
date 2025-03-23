@@ -1,5 +1,5 @@
 /* global expect test */
-import site from "./uta-net.js";
+import site from './uta-net.js';
 
 const getHtml = async (url) => {
   const response = await fetch(url);
@@ -19,36 +19,36 @@ async function testLyric(object) {
   if (length > 0) expect(inst.lyric.length).toBe(length);
 }
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://www.uta-net.com/song/231884/",
-    title: "sh0ut",
-    artist: "SawanoHiroyuki[nZk]:Tielle&Gemie",
-    lyricist: "Hiroyuki Sawano・Tielle",
-    composer: "Hiroyuki Sawano",
+    url: 'https://www.uta-net.com/song/231884/',
+    title: 'sh0ut',
+    artist: 'SawanoHiroyuki[nZk]:Tielle&Gemie',
+    lyricist: 'Hiroyuki Sawano・Tielle',
+    composer: 'Hiroyuki Sawano',
     length: 1881,
   });
 });
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://www.uta-net.com/song/237845/",
-    title: "灰色と青 ( + 菅田将暉)",
-    artist: "米津玄師",
-    lyricist: "米津玄師",
-    composer: "米津玄師",
+    url: 'https://www.uta-net.com/song/237845/',
+    title: '灰色と青 ( + 菅田将暉)',
+    artist: '米津玄師',
+    lyricist: '米津玄師',
+    composer: '米津玄師',
     length: 629,
   });
 });
 
-test("", async () => {
+test('', async () => {
   await testLyric({
-    url: "https://www.uta-net.com/song/322189/",
-    title: "JUST COMMUNICATION",
-    artist: "angela",
-    lyricist: "永野椎菜",
-    composer: "馬飼野康二",
-    arranger: "angela",
+    url: 'https://www.uta-net.com/song/322189/',
+    title: 'JUST COMMUNICATION',
+    artist: 'angela',
+    lyricist: '永野椎菜',
+    composer: '馬飼野康二',
+    arranger: 'angela',
     length: 671,
   });
 });
