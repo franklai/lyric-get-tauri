@@ -5,6 +5,7 @@
       "name": "lyric-get-tauri",
       "devDependencies": {
         "@tauri-apps/cli": "^1.5.6",
+        "prettier": "3.5.3",
       },
     },
   },
@@ -30,6 +31,8 @@
     "@tauri-apps/cli-win32-ia32-msvc": ["@tauri-apps/cli-win32-ia32-msvc@1.6.3", "", { "os": "win32", "cpu": "ia32" }, "sha512-T8V6SJQqE4PSWmYBl0ChQVmS6AR2hXFHURH2DwAhgSGSQ6uBXgwlYFcfIeQpBQA727K2Eq8X2hGfvmoySyHMRw=="],
 
     "@tauri-apps/cli-win32-x64-msvc": ["@tauri-apps/cli-win32-x64-msvc@1.6.3", "", { "os": "win32", "cpu": "x64" }, "sha512-HUkWZ+lYHI/Gjkh2QjHD/OBDpqLVmvjZGpLK9losur1Eg974Jip6k+vsoTUxQBCBDfj30eDBct9E1FvXOspWeg=="],
+
+    "prettier": ["prettier@3.5.3", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw=="],
 
     "semver": ["semver@7.7.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA=="],
   }
