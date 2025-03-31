@@ -1,0 +1,37 @@
+{
+  "identifier": "migrated",
+  "description": "permissions that were migrated from v1",
+  "local": true,
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "shell:allow-open",
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "https://franks543-lyric-get.vercel.app/*"
+        },
+        {
+          "url": "https://genius.com/*"
+        },
+        {
+          "url": "https://www.kkbox.com/*"
+        },
+        {
+          "url": "https://www.musixmatch.com/lyrics/*"
+        },
+        {
+          "url": "https://www.utamap.com/*"
+        },
+        {
+          "url": "https://www.uta-net.com/*"
+        }
+      ]
+    },
+    "http:default",
+    "shell:default"
+  ]
+}
