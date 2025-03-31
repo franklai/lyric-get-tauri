@@ -4,7 +4,7 @@
     "": {
       "name": "lyric-get-tauri",
       "dependencies": {
-        "@tauri-apps/plugin-http": "~2",
+        "@tauri-apps/plugin-http": "^2.4.2",
         "@tauri-apps/plugin-shell": "~2",
       },
       "devDependencies": {

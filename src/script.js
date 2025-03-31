@@ -134,35 +134,10 @@ function init() {
     inputUrl.select();
   });
 
-  var doAjaxQuery = function (val) {
-    var url = 'app?url=' + encodeURIComponent(val);
-
-    fetch(url)
-      .then(function (resp) {
-        resp
-          .json()
-          .then(function (json) {
-            if (!json || !json.lyric) {
-              setError();
-              return;
-            }
-            setResult(json.lyric);
-          })
-          .catch(function () {
-            setError();
-          });
-      })
-      .catch(function () {
-        setError();
-      });
-  };
-
   const getHtml = async (url) => {
     const { http } = window.__TAURI__;
-    const response = await http.fetch(url, {
-      responseType: http.ResponseType.Text,
-    });
-    return response.data;
+    const response = await http.fetch(url);
+    return await response.text();
   };
 
   const doLocalQuery = async (val) => {
